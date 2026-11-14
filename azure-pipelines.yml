@@ -1,0 +1,40 @@
+trigger:
+  branches:
+    include:
+      - main
+
+parameters:
+  - name: environments
+    type: object
+    default: [dev, test, prod]
+
+pool:
+  name: <self-hosted-agent-pool>
+
+stages:
+  - ${{ each env in parameters.environments }}:
+      - stage: Deploy_${{ env }}
+        displayName: Deploy to ${{ upper(env) }}
+        variables:
+          - group: fabric-${{ env }}  # per-environment values and secrets
+        jobs:
+          - deployment: DeployFabricItems
+            environment: fabric-${{ env }}  # approvals on test and prod
+            strategy:
+              runOnce:
+                deploy:
+                  steps:
+                    - checkout: self
+                      clean: true
+                    - script: |
+                        python -m pip install --upgrade pip
+                        pip install -r requirements.txt
+                        python deploy.py
+                      displayName: Publish Fabric items
+                      env:
+                        FABRIC_TENANT_ID: $(fabricTenantId)
+                        FABRIC_CLIENT_ID: $(fabricClientId)
+                        FABRIC_CLIENT_SECRET: $(fabricClientSecret)
+                        TARGET_WORKSPACE_ID: $(workspaceId)
+                        TARGET_WORKSPACE_NAME: $(workspaceName)
+                        DEPLOYMENT_ENVIRONMENT: ${{ upper(env) }}

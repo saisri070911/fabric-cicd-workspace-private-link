@@ -1,0 +1,3 @@
+# Pin reviewed versions before production use, for example fabric-cicd==<version>
+azure-identity
+fabric-cicd
