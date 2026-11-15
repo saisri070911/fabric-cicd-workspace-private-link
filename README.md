@@ -56,3 +56,8 @@ See [docs/setup-guide.md](docs/setup-guide.md) for the full walkthrough.
 - [Supported scenarios and limitations for workspace-level private links](https://learn.microsoft.com/en-us/fabric/security/security-workspace-level-private-links-support)
 - [CI/CD for Microsoft Fabric using Azure DevOps and fabric-cicd](https://learn.microsoft.com/en-us/fabric/cicd/tutorial-fabric-cicd-azure-devops)
 - [fabric-cicd documentation](https://microsoft.github.io/fabric-cicd/)
+
+
+## Contributors
+
+- Fretz Nuson
